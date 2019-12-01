@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		63E86CFD2393ED2900CAA600 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86CFC2393ED2900CAA600 /* main.swift */; };
+		63E86D092393EEBF00CAA600 /* Puzzle01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86D082393EEBF00CAA600 /* Puzzle01.swift */; };
+		63E86D0E2393F19000CAA600 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86D0D2393F19000CAA600 /* Puzzle.swift */; };
+		63E86D102393F57800CAA600 /* InputFileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86D0F2393F57800CAA600 /* InputFileReader.swift */; };
+		63E86D1B2393F72900CAA600 /* Input01 in Resources */ = {isa = PBXBuildFile; fileRef = 63E86D052393EE3000CAA600 /* Input01 */; };
+		63E86D1F2393F7C200CAA600 /* InputFilesBundle.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 63E86D152393F72200CAA600 /* InputFilesBundle.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -17,6 +22,7 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
+				63E86D1F2393F7C200CAA600 /* InputFilesBundle.bundle in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -25,10 +31,23 @@
 /* Begin PBXFileReference section */
 		63E86CF92393ED2900CAA600 /* Advent Of Code 2019 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Advent Of Code 2019"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E86CFC2393ED2900CAA600 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		63E86D052393EE3000CAA600 /* Input01 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input01; sourceTree = "<group>"; };
+		63E86D082393EEBF00CAA600 /* Puzzle01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle01.swift; sourceTree = "<group>"; };
+		63E86D0D2393F19000CAA600 /* Puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
+		63E86D0F2393F57800CAA600 /* InputFileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFileReader.swift; sourceTree = "<group>"; };
+		63E86D152393F72200CAA600 /* InputFilesBundle.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InputFilesBundle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		63E86D172393F72200CAA600 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		63E86CF62393ED2900CAA600 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63E86D122393F72200CAA600 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				63E86CFB2393ED2900CAA600 /* Advent Of Code 2019 */,
+				63E86D162393F72200CAA600 /* InputFilesBundle */,
 				63E86CFA2393ED2900CAA600 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				63E86CF92393ED2900CAA600 /* Advent Of Code 2019 */,
+				63E86D152393F72200CAA600 /* InputFilesBundle.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,9 +78,37 @@
 		63E86CFB2393ED2900CAA600 /* Advent Of Code 2019 */ = {
 			isa = PBXGroup;
 			children = (
+				63E86D0A2393EF9100CAA600 /* Helpers */,
+				63E86D042393EDC200CAA600 /* 01 */,
 				63E86CFC2393ED2900CAA600 /* main.swift */,
 			);
 			path = "Advent Of Code 2019";
+			sourceTree = "<group>";
+		};
+		63E86D042393EDC200CAA600 /* 01 */ = {
+			isa = PBXGroup;
+			children = (
+				63E86D052393EE3000CAA600 /* Input01 */,
+				63E86D082393EEBF00CAA600 /* Puzzle01.swift */,
+			);
+			path = 01;
+			sourceTree = "<group>";
+		};
+		63E86D0A2393EF9100CAA600 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				63E86D0D2393F19000CAA600 /* Puzzle.swift */,
+				63E86D0F2393F57800CAA600 /* InputFileReader.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		63E86D162393F72200CAA600 /* InputFilesBundle */ = {
+			isa = PBXGroup;
+			children = (
+				63E86D172393F72200CAA600 /* Info.plist */,
+			);
+			path = InputFilesBundle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +131,23 @@
 			productReference = 63E86CF92393ED2900CAA600 /* Advent Of Code 2019 */;
 			productType = "com.apple.product-type.tool";
 		};
+		63E86D142393F72200CAA600 /* InputFilesBundle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63E86D182393F72200CAA600 /* Build configuration list for PBXNativeTarget "InputFilesBundle" */;
+			buildPhases = (
+				63E86D112393F72200CAA600 /* Sources */,
+				63E86D122393F72200CAA600 /* Frameworks */,
+				63E86D132393F72200CAA600 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InputFilesBundle;
+			productName = InputFilesBundle;
+			productReference = 63E86D152393F72200CAA600 /* InputFilesBundle.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +159,9 @@
 				ORGANIZATIONNAME = jaydeep;
 				TargetAttributes = {
 					63E86CF82393ED2900CAA600 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+					63E86D142393F72200CAA600 = {
 						CreatedOnToolsVersion = 11.2.1;
 					};
 				};
@@ -111,9 +180,21 @@
 			projectRoot = "";
 			targets = (
 				63E86CF82393ED2900CAA600 /* Advent Of Code 2019 */,
+				63E86D142393F72200CAA600 /* InputFilesBundle */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		63E86D132393F72200CAA600 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63E86D1B2393F72900CAA600 /* Input01 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		63E86CF52393ED2900CAA600 /* Sources */ = {
@@ -121,6 +202,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				63E86CFD2393ED2900CAA600 /* main.swift in Sources */,
+				63E86D0E2393F19000CAA600 /* Puzzle.swift in Sources */,
+				63E86D092393EEBF00CAA600 /* Puzzle01.swift in Sources */,
+				63E86D102393F57800CAA600 /* InputFileReader.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63E86D112393F72200CAA600 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +353,36 @@
 			};
 			name = Release;
 		};
+		63E86D192393F72200CAA600 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = LAH32MJT38;
+				INFOPLIST_FILE = InputFilesBundle/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.itwenty.InputFilesBundle;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		63E86D1A2393F72200CAA600 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = LAH32MJT38;
+				INFOPLIST_FILE = InputFilesBundle/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.itwenty.InputFilesBundle;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -279,6 +400,15 @@
 			buildConfigurations = (
 				63E86D012393ED2900CAA600 /* Debug */,
 				63E86D022393ED2900CAA600 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63E86D182393F72200CAA600 /* Build configuration list for PBXNativeTarget "InputFilesBundle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63E86D192393F72200CAA600 /* Debug */,
+				63E86D1A2393F72200CAA600 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

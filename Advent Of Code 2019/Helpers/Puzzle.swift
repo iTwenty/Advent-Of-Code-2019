@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Puzzle.swift
 //  Advent Of Code 2019
 //
 //  Created by jaydeep on 01/12/19.
@@ -8,6 +8,7 @@
 
 import Foundation
 
-let puzzle = Puzzle01()
-print(puzzle.part1())
-print(puzzle.part2())
+protocol Puzzle {
+    func part1() -> String
+    func part2() -> String
+}
