@@ -9,16 +9,13 @@
 import Foundation
 
 class InputFileReader {
-    static func readInput(id: String) -> [String] {
+    static func readInput(id: String, separator: Character = "\n") -> [String] {
         let currentDirectoryURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
         let bundleUrl = URL(fileURLWithPath: "InputFilesBundle.bundle", relativeTo: currentDirectoryURL)
         let bundle = Bundle(url: bundleUrl)
         let inputFileUrl = bundle!.url(forResource: "Input\(id)", withExtension: nil)!
         let contents = try! String(contentsOf: inputFileUrl, encoding: .utf8)
-        var input: [String] = []
-        contents.enumerateLines { (line, stop) in
-            input.append(line)
-        }
+        let input: [String] = contents.split(separator: separator).map(String.init)
         return input
     }
 }
