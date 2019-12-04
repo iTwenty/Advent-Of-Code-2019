@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6307BFC123952CA000809579 /* Puzzle02.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6307BFC023952CA000809579 /* Puzzle02.swift */; };
 		6307BFC323952D6B00809579 /* Input02 in Resources */ = {isa = PBXBuildFile; fileRef = 6307BFC223952D6B00809579 /* Input02 */; };
+		6307BFD8239672C200809579 /* Input03 in Resources */ = {isa = PBXBuildFile; fileRef = 6307BFD7239672C200809579 /* Input03 */; };
+		6307BFDA2396731400809579 /* Puzzle03.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6307BFD92396731300809579 /* Puzzle03.swift */; };
 		63E86CFD2393ED2900CAA600 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86CFC2393ED2900CAA600 /* main.swift */; };
 		63E86D092393EEBF00CAA600 /* Puzzle01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86D082393EEBF00CAA600 /* Puzzle01.swift */; };
 		63E86D0E2393F19000CAA600 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86D0D2393F19000CAA600 /* Puzzle.swift */; };
@@ -33,6 +35,8 @@
 /* Begin PBXFileReference section */
 		6307BFC023952CA000809579 /* Puzzle02.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle02.swift; sourceTree = "<group>"; };
 		6307BFC223952D6B00809579 /* Input02 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input02; sourceTree = "<group>"; };
+		6307BFD7239672C200809579 /* Input03 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input03; sourceTree = "<group>"; };
+		6307BFD92396731300809579 /* Puzzle03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle03.swift; sourceTree = "<group>"; };
 		63E86CF92393ED2900CAA600 /* Advent Of Code 2019 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Advent Of Code 2019"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E86CFC2393ED2900CAA600 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		63E86D052393EE3000CAA600 /* Input01 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input01; sourceTree = "<group>"; };
@@ -70,6 +74,15 @@
 			path = 02;
 			sourceTree = "<group>";
 		};
+		6307BFD62396726A00809579 /* 03 */ = {
+			isa = PBXGroup;
+			children = (
+				6307BFD7239672C200809579 /* Input03 */,
+				6307BFD92396731300809579 /* Puzzle03.swift */,
+			);
+			path = 03;
+			sourceTree = "<group>";
+		};
 		63E86CF02393ED2900CAA600 = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +107,7 @@
 				63E86D0A2393EF9100CAA600 /* Helpers */,
 				63E86D042393EDC200CAA600 /* 01 */,
 				6307BFBF23952C8500809579 /* 02 */,
+				6307BFD62396726A00809579 /* 03 */,
 				63E86CFC2393ED2900CAA600 /* main.swift */,
 			);
 			path = "Advent Of Code 2019";
@@ -204,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6307BFD8239672C200809579 /* Input03 in Resources */,
 				63E86D1B2393F72900CAA600 /* Input01 in Resources */,
 				6307BFC323952D6B00809579 /* Input02 in Resources */,
 			);
@@ -216,6 +231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6307BFDA2396731400809579 /* Puzzle03.swift in Sources */,
 				63E86CFD2393ED2900CAA600 /* main.swift in Sources */,
 				63E86D0E2393F19000CAA600 /* Puzzle.swift in Sources */,
 				63E86D092393EEBF00CAA600 /* Puzzle01.swift in Sources */,
