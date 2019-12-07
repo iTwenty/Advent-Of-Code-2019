@@ -11,8 +11,10 @@ import Foundation
 class IntcodeComputer {
     private var inputCounter = 0
 
-    func compute(program: inout [Int], inputs: Int...) {
+    @discardableResult
+    func compute(program: inout [Int], printOutputs: Bool = false, inputs: Int...) -> [Int] {
         self.inputCounter = 0
+        var outputs: [Int] = []
         var pc = 0
         while pc < program.count {
             let instruction = program[pc]
@@ -40,7 +42,10 @@ class IntcodeComputer {
             case 4:
                 let fstParam = program[pc + 1]
                 let fstValue = ((instruction / 100) % 10 == 0 ? program[fstParam] : fstParam)
-                print(fstValue)
+                if printOutputs {
+                    print(fstValue)
+                }
+                outputs.append(fstValue)
                 pc = pc + 2
             case 5, 6:
                 let fstParam = program[pc + 1]
@@ -58,6 +63,7 @@ class IntcodeComputer {
                 fatalError("HALT")
             }
         }
+        return outputs
     }
 
     private func readInput(_ inputs: [Int]) -> Int {

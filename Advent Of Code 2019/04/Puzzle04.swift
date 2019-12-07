@@ -42,13 +42,13 @@
 
 import Foundation
 
-extension BinaryInteger {
+fileprivate extension BinaryInteger {
     var digits: [Int] {
         return String(describing: self).compactMap { Int(String($0)) }
     }
 }
 
-extension Array where Element: Hashable {
+fileprivate extension Array where Element: Hashable {
     func counted() -> [Element: Int] {
         let ones = repeatElement(1, count: self.count)
         return Dictionary(zip(self, ones), uniquingKeysWith: +)

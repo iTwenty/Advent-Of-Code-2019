@@ -114,13 +114,13 @@ struct Puzzle05: Puzzle {
 
     func part1() -> String {
         var inputt = input
-        computer.compute(program: &inputt, inputs: 1)
+        computer.compute(program: &inputt, printOutputs: true ,inputs: 1)
         return ""
     }
 
     func part2() -> String {
         var inputt = input
-        computer.compute(program: &inputt, inputs: 5)
+        computer.compute(program: &inputt, printOutputs: true ,inputs: 5)
         return ""
     }
 }
