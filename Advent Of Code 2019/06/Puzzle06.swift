@@ -63,6 +63,57 @@
 
  What is the total number of direct and indirect orbits in your map data?
 
+ --- Part Two ---
+
+ Now, you just need to figure out how many orbital transfers you (YOU) need to take to get to Santa (SAN).
+
+ You start at the object YOU are orbiting; your destination is the object SAN is orbiting. An orbital transfer lets you move from any object to an object orbiting or orbited by that object.
+
+ For example, suppose you have the following map:
+
+ COM)B
+ B)C
+ C)D
+ D)E
+ E)F
+ B)G
+ G)H
+ D)I
+ E)J
+ J)K
+ K)L
+ K)YOU
+ I)SAN
+
+ Visually, the above map of orbits looks like this:
+
+                           YOU
+                          /
+         G - H       J - K - L
+        /           /
+ COM - B - C - D - E - F
+                \
+                 I - SAN
+
+ In this example, YOU are in orbit around K, and SAN is in orbit around I. To move from K to I, a minimum of 4 orbital transfers are required:
+
+     K to J
+     J to E
+     E to D
+     D to I
+
+ Afterward, the map of orbits looks like this:
+
+         G - H       J - K - L
+        /           /
+ COM - B - C - D - E - F
+                \
+                 I - SAN
+                  \
+                   YOU
+
+ What is the minimum number of orbital transfers required to move from the object YOU are orbiting to the object SAN is orbiting? (Between the objects they are orbiting - not between YOU and SAN.)
+
  */
 
 import Foundation
@@ -85,7 +136,7 @@ class TreeCreator {
         let child: String
     }
 
-    fileprivate static func createTree() -> Node {
+    fileprivate static func createTrees() -> [Node] {
         let input: Set<Relation> = Set(InputFileReader.readInput(id: "06").map { s in
             let ss = s.split(separator: ")")
             return Relation(parent: String(ss[0]), child: String(ss[1]))
@@ -94,7 +145,7 @@ class TreeCreator {
         let parents = Set(input.map { $0.parent })
         let children = Set(input.map { $0.child })
         let roots = parents.subtracting(children)
-        return trees(from: Array(roots), childrenLookupDict: childrenLookupDict)[0]
+        return trees(from: Array(roots), childrenLookupDict: childrenLookupDict)
     }
 
     private static func trees(from roots: [String], childrenLookupDict: [String: [String]]) -> [Node] {
@@ -119,7 +170,7 @@ class TreeCreator {
 }
 
 struct Puzzle06: Puzzle {
-    let tree: Node = TreeCreator.createTree()
+    let tree: Node = TreeCreator.createTrees()[0]
 
     private func depth(ofNode node: Node) -> Int {
         var depth = 0
@@ -147,6 +198,38 @@ struct Puzzle06: Puzzle {
     }
 
     func part2() -> String {
-        return ""
+        var youNode: Node?
+        var sanNode: Node?
+
+        visitTree(tree) { (node) in
+            if node.id == "YOU" {
+                youNode = node
+            }
+            if node.id == "SAN" {
+                sanNode = node
+            }
+        }
+
+        var youParents: [String: Int] = [:]
+        var sanParents: [String: Int] = [:]
+        var stepsToParent = 0
+        while let you = youNode?.parent {
+            stepsToParent = stepsToParent + 1
+            youParents[you.id] = stepsToParent
+            youNode = you
+        }
+        stepsToParent = 0
+        while let san = sanNode?.parent {
+            stepsToParent = stepsToParent + 1
+            sanParents[san.id] = stepsToParent
+            sanNode = san
+        }
+
+        let commonParents = Set(youParents.keys).intersection(Set(sanParents.keys))
+        let orbitalTransfers = commonParents.map {
+            youParents[$0]! + sanParents[$0]!
+        }.min()! - 2 // Since we have also included the transfer from YOU
+                     //and SAN to their respective parents, we subtract 2 here.
+        return "\(orbitalTransfers)"
     }
 }
