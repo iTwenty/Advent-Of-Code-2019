@@ -85,41 +85,32 @@ import Foundation
 
 struct Puzzle02: Puzzle {
     let input: [Int]
+    let intcodeComputer: IntcodeComputer
 
     init() {
         input = InputFileReader.readInput(id: "02", separator: ",").compactMap { Int($0) }
-    }
-
-    private func findOutput(noun: Int, verb: Int) -> Int {
-        var inputt = input
-        inputt[1] = noun
-        inputt[2] = verb
-        for i in stride(from: 0, to: inputt.count, by: 4) {
-            let code = inputt[i]
-            if code == 99 {
-                break
-            } else if code == 1 || code == 2 {
-                let fst = inputt[inputt[i + 1]]
-                let snd = inputt[inputt[i + 2]]
-                let result = (code == 1 ? fst + snd : fst * snd)
-                inputt[inputt[i + 3]] = result
-            } else {
-                fatalError("Encountered invalid opcode - \(code)")
-            }
-        }
-        return (inputt[0])
+        intcodeComputer = IntcodeComputer()
     }
 
     func part1() -> String {
-       return "\(findOutput(noun: 12, verb: 2))"
+        var inputt = input
+        inputt[1] = 12
+        inputt[2] = 2
+        intcodeComputer.compute(program: &inputt)
+       return "\(inputt[0])"
     }
 
     func part2() -> String {
+
         var result: Int?
-        (0...99).forEach { (i) in
-            (0...99).forEach { (j) in
-                if findOutput(noun: i, verb: j) == 19690720 {
-                    result = 100 * i + j
+        (0...99).forEach { (noun) in
+            (0...99).forEach { (verb) in
+                var inputt = input
+                inputt[1] = noun
+                inputt[2] = verb
+                intcodeComputer.compute(program: &inputt)
+                if inputt[0] == 19690720 {
+                    result = 100 * noun + verb
                 }
             }
         }

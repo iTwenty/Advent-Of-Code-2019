@@ -105,77 +105,22 @@ import Foundation
 
 struct Puzzle05: Puzzle {
     let input: [Int]
+    let computer: IntcodeComputer
 
     init() {
         input = InputFileReader.readInput(id: "05", separator: ",").map { Int($0.trimmingCharacters(in: .whitespacesAndNewlines))! }
-    }
-
-    private func processInstruction(_ instruction: Int, input: inout [Int], pc: inout Int, initialInput: Int) -> Bool {
-        let opcode = instruction % 100
-        switch opcode {
-        case 1, 2, 7, 8:
-            let fstParam = input[pc + 1]
-            let sndParam = input[pc + 2]
-            let thdParam = input[pc + 3]
-            let fstValue = ((instruction / 100) % 10 == 0 ? input[fstParam] : fstParam)
-            let sndValue = ((instruction / 1000) % 10 == 0 ? input[sndParam] : sndParam)
-            if opcode == 1 {
-                input[thdParam] = fstValue + sndValue
-            } else if opcode == 2 {
-                input[thdParam] = fstValue * sndValue
-            } else if opcode == 7 {
-                input[thdParam] = (fstValue < sndValue) ? 1 : 0
-            } else {
-                input[thdParam] = (fstValue == sndValue) ? 1 : 0
-            }
-            pc = pc + 4
-        case 3:
-            input[input[pc + 1]] = initialInput
-            pc = pc + 2
-        case 4:
-            let fstParam = input[pc + 1]
-            let fstValue = ((instruction / 100) % 10 == 0 ? input[fstParam] : fstParam)
-            print(fstValue)
-            pc = pc + 2
-        case 5, 6:
-            let fstParam = input[pc + 1]
-            let sndParam = input[pc + 2]
-            let fstValue = ((instruction / 100) % 10 == 0 ? input[fstParam] : fstParam)
-            let sndValue = ((instruction / 1000) % 10 == 0 ? input[sndParam] : sndParam)
-            if (opcode == 5 && fstValue != 0) || (opcode == 6 && fstValue == 0) {
-                pc = sndValue
-            } else {
-                pc = pc + 3
-            }
-        case 99:
-            return false
-        default:
-            fatalError("HALT")
-        }
-        return true
+        computer = IntcodeComputer()
     }
 
     func part1() -> String {
         var inputt = input
-        var pc = 0
-        while pc < inputt.count {
-            let instruction = inputt[pc]
-            if !processInstruction(instruction, input: &inputt, pc: &pc, initialInput: 1) {
-                break
-            }
-        }
+        computer.compute(program: &inputt, inputs: 1)
         return ""
     }
 
     func part2() -> String {
         var inputt = input
-        var pc = 0
-        while pc < inputt.count {
-            let instruction = inputt[pc]
-            if !processInstruction(instruction, input: &inputt, pc: &pc, initialInput: 5) {
-                break
-            }
-        }
+        computer.compute(program: &inputt, inputs: 5)
         return ""
     }
 }
