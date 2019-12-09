@@ -85,31 +85,31 @@ import Foundation
 
 struct Puzzle02: Puzzle {
     let input: [Int]
-    let intcodeComputer: IntcodeComputer
 
     init() {
         input = InputFileReader.readInput(id: "02", separator: ",").compactMap { Int($0) }
-        intcodeComputer = IntcodeComputer()
     }
 
     func part1() -> String {
         var inputt = input
         inputt[1] = 12
         inputt[2] = 2
-        intcodeComputer.compute(program: &inputt)
-       return "\(inputt[0])"
+        let computer = IntcodeComputer(intcode: inputt)
+        computer.compute()
+        return "\(computer.value(atMemoryAddress: 0))"
     }
 
     func part2() -> String {
-
         var result: Int?
+
         (0...99).forEach { (noun) in
             (0...99).forEach { (verb) in
                 var inputt = input
                 inputt[1] = noun
                 inputt[2] = verb
-                intcodeComputer.compute(program: &inputt)
-                if inputt[0] == 19690720 {
+                let computer = IntcodeComputer(intcode: inputt)
+                computer.compute()
+                if computer.value(atMemoryAddress: 0) == 19690720 {
                     result = 100 * noun + verb
                 }
             }

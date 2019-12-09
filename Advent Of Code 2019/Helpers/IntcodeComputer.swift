@@ -15,29 +15,43 @@ fileprivate enum ParameterMode: Int {
 }
 
 class IntcodeComputer {
+    // Original program
+    private let intcode: [Int]
+
+    // Internal state
     private var inputCounter = 0
     private var relativeBase = 0
-    private var memory: [Int] = []
+    private var pc = 0
+    private var memory: [Int: Int] = [:]
+
+    init(intcode: [Int]) {
+        self.intcode = intcode
+        reset()
+    }
+
+    // Reset the internal state
+    func reset() {
+        inputCounter = 0
+        relativeBase = 0
+        pc = 0
+        memory = [:]
+        intcode.enumerated().forEach { (tuple) in
+            let (offset, element) = tuple
+            memory[offset] = element
+        }
+    }
 
     @discardableResult
-    func compute(program: inout [Int], printOutputs: Bool = false, inputs: Int...) -> [Int] {
-        self.inputCounter = 0
-        self.relativeBase = 0
-        self.memory = Array(repeating: 0, count: 100000000)
-        program.enumerated().forEach { (tuple) in
-            let (offset, element) = tuple
-            self.memory[offset] = element
-        }
+    func compute(printOutputs: Bool = false, inputs: Int...) -> [Int] {
         var outputs: [Int] = []
-        var pc = 0
-        while pc < program.count {
-            let instruction = memory[pc]
+        while pc < intcode.count {
+            let instruction = memory[pc, default: 0]
             let opcode = instruction % 100
             switch opcode {
             case 1, 2, 7, 8:
-                let fstParam = memory[pc + 1]
-                let sndParam = memory[pc + 2]
-                let thdParam = memory[pc + 3]
+                let fstParam = memory[pc + 1, default: 0]
+                let sndParam = memory[pc + 2, default: 0]
+                let thdParam = memory[pc + 3, default: 0]
                 let fstValue = resolveParameter(fstParam, forMode: (instruction / 100) % 10, program: memory)
                 let sndValue = resolveParameter(sndParam, forMode: (instruction / 1000) % 10, program: memory)
                 let thdValue = resolveWriteParameter(thdParam, forMode: (instruction / 10000) % 10, program: memory)
@@ -52,12 +66,12 @@ class IntcodeComputer {
                 }
                 pc = pc + 4
             case 3:
-                let fstParam = memory[pc + 1]
+                let fstParam = memory[pc + 1, default: 0]
                 let fstValue = resolveWriteParameter(fstParam, forMode: (instruction / 100) % 10, program: memory)
                 memory[fstValue] = readInput(inputs)
                 pc = pc + 2
             case 4:
-                let fstParam = memory[pc + 1]
+                let fstParam = memory[pc + 1, default: 0]
                 let fstValue = resolveParameter(fstParam, forMode: (instruction / 100) % 10, program: memory)
                 if printOutputs {
                     print(fstValue)
@@ -65,8 +79,8 @@ class IntcodeComputer {
                 outputs.append(fstValue)
                 pc = pc + 2
             case 5, 6:
-                let fstParam = memory[pc + 1]
-                let sndParam = memory[pc + 2]
+                let fstParam = memory[pc + 1, default: 0]
+                let sndParam = memory[pc + 2, default: 0]
                 let fstValue = resolveParameter(fstParam, forMode: (instruction / 100) % 10, program: memory)
                 let sndValue = resolveParameter(sndParam, forMode: (instruction / 1000) % 10, program: memory)
                 if (opcode == 5 && fstValue != 0) || (opcode == 6 && fstValue == 0) {
@@ -75,32 +89,35 @@ class IntcodeComputer {
                     pc = pc + 3
                 }
             case 9:
-                let fstParam = memory[pc + 1]
+                let fstParam = memory[pc + 1, default: 0]
                 let fstValue = resolveParameter(fstParam, forMode: (instruction / 100) % 10, program: memory)
                 relativeBase += fstValue
                 pc = pc + 2
             case 99:
-                pc = program.count
+                pc = intcode.count
             default:
                 fatalError("HALT")
             }
         }
-        program = Array(memory[0..<program.endIndex])
         return outputs
     }
 
-    private func resolveParameter(_ parameter: Int, forMode mode: Int, program: [Int]) -> Int {
+    func value(atMemoryAddress address: Int) -> Int {
+        return memory[address, default: 0]
+    }
+
+    private func resolveParameter(_ parameter: Int, forMode mode: Int, program: [Int: Int]) -> Int {
         guard let parameterMode = ParameterMode(rawValue: mode) else {
             fatalError("Invalid paramater mode : \(mode)")
         }
         switch parameterMode {
-        case .position: return program[parameter]
+        case .position: return program[parameter, default: 0]
         case .immediate: return parameter
-        case .relative: return program[relativeBase + parameter]
+        case .relative: return program[relativeBase + parameter, default: 0]
         }
     }
 
-    private func resolveWriteParameter(_ parameter: Int, forMode mode: Int, program: [Int]) -> Int {
+    private func resolveWriteParameter(_ parameter: Int, forMode mode: Int, program: [Int: Int]) -> Int {
         guard let parameterMode = ParameterMode(rawValue: mode) else {
             fatalError("Invalid paramater mode : \(mode)")
         }

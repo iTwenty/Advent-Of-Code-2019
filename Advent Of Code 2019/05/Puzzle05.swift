@@ -105,22 +105,20 @@ import Foundation
 
 struct Puzzle05: Puzzle {
     let input: [Int]
-    let computer: IntcodeComputer
 
     init() {
         input = InputFileReader.readInput(id: "05", separator: ",").map { Int($0.trimmingCharacters(in: .whitespacesAndNewlines))! }
-        computer = IntcodeComputer()
     }
 
     func part1() -> String {
-        var inputt = input
-        computer.compute(program: &inputt, printOutputs: true ,inputs: 1)
+        let computer = IntcodeComputer(intcode: input)
+        computer.compute(printOutputs: true ,inputs: 1)
         return ""
     }
 
     func part2() -> String {
-        var inputt = input
-        computer.compute(program: &inputt, printOutputs: true ,inputs: 5)
+        let computer = IntcodeComputer(intcode: input)
+        computer.compute(printOutputs: true ,inputs: 5)
         return ""
     }
 }

@@ -95,43 +95,52 @@
 
 import Foundation
 
-fileprivate extension BinaryInteger {
-    var digits: [Int] {
-        return String(describing: self).compactMap { Int(String($0)) }
+fileprivate extension String {
+    func permutations() -> [Self] {
+        if self.count == 1 {
+            return [self]
+        }
+        var result: [Self] = []
+        for i in self.indices {
+            let char = String(self[i])
+            let remaining = String(self[self.startIndex..<i]) + String(self[self.index(after: i)..<self.endIndex])
+            let perms = remaining.permutations().map { char + $0 }
+            result.append(contentsOf: perms)
+        }
+        return result
     }
 }
 
 struct Puzzle07: Puzzle {
     let input: [Int]
-    let computer: IntcodeComputer
 
     init() {
         input = InputFileReader.readInput(id: "07", separator: ",").map { Int($0.trimmingCharacters(in: .whitespacesAndNewlines))! }
-        computer = IntcodeComputer()
     }
 
     func part1() -> String {
-        let possiblePhases = (01234...43210).filter { (number) -> Bool in
-            let digits = number.digits
-            return digits.allSatisfy { (0...4).contains($0) } && Set(digits).count == digits.count
+        let possiblePhases = "01234".permutations().map { (permutation) -> [Int] in
+            Array(permutation).map { $0.wholeNumberValue! }
         }
 
+        let computer = IntcodeComputer(intcode: input)
+
         let outputs = possiblePhases.map { (possiblePhase) -> Int in
-            let ampAPhase = (possiblePhase / 10000) % 10
-            let ampBPhase = (possiblePhase / 1000) % 10
-            let ampCPhase = (possiblePhase / 100) % 10
-            let ampDPhase = (possiblePhase / 10) % 10
-            let ampEPhase = (possiblePhase / 1) % 10
-            var inputt = input
-            let ampAOutput = computer.compute(program: &inputt, inputs: ampAPhase, 0)
-            inputt = input
-            let ampBOutput = computer.compute(program: &inputt, inputs: ampBPhase, ampAOutput.last!)
-            inputt = input
-            let ampCOutput = computer.compute(program: &inputt, inputs: ampCPhase, ampBOutput.last!)
-            inputt = input
-            let ampDOutput = computer.compute(program: &inputt, inputs: ampDPhase, ampCOutput.last!)
-            inputt = input
-            let ampEOutput = computer.compute(program: &inputt, inputs: ampEPhase, ampDOutput.last!)
+            let ampAPhase = possiblePhase[0]
+            let ampBPhase = possiblePhase[1]
+            let ampCPhase = possiblePhase[2]
+            let ampDPhase = possiblePhase[3]
+            let ampEPhase = possiblePhase[4]
+            let ampAOutput = computer.compute(inputs: ampAPhase, 0)
+            computer.reset()
+            let ampBOutput = computer.compute(inputs: ampBPhase, ampAOutput.last!)
+            computer.reset()
+            let ampCOutput = computer.compute(inputs: ampCPhase, ampBOutput.last!)
+            computer.reset()
+            let ampDOutput = computer.compute(inputs: ampDPhase, ampCOutput.last!)
+            computer.reset()
+            let ampEOutput = computer.compute(inputs: ampEPhase, ampDOutput.last!)
+            computer.reset()
             return ampEOutput.last!
         }
         return "\(outputs.max()!)"

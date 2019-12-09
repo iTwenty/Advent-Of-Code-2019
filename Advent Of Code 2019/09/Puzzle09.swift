@@ -66,18 +66,16 @@ struct Puzzle09: Puzzle {
 
     init() {
         input = InputFileReader.readInput(id: "09", separator: ",").map { Int($0.trimmingCharacters(in: .whitespacesAndNewlines))! }
-        computer = IntcodeComputer()
+        computer = IntcodeComputer(intcode: input)
     }
 
     func part1() -> String {
-        var inputt = input
-        computer.compute(program: &inputt, printOutputs: true, inputs: 1)
+        computer.compute(printOutputs: true, inputs: 1)
         return ""
     }
 
     func part2() -> String {
-        var inputt = input
-        computer.compute(program: &inputt, printOutputs: true, inputs: 2)
+        computer.compute(printOutputs: true, inputs: 2)
         return ""
     }
 }
