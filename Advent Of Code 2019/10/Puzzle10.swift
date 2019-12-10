@@ -116,22 +116,22 @@
 
 import Foundation
 
-fileprivate struct Position: Equatable, Hashable {
+fileprivate struct Asteroid: Equatable, Hashable {
     let x: Int
     let y: Int
 }
 
 struct Puzzle10: Puzzle {
-    private let positions: Set<Position>
+    private let asteroids: Set<Asteroid>
 
     init() {
         let inputLines = InputFileReader.readInput(id: "10")
-        positions = Set(inputLines.enumerated().flatMap { (tuple) -> [Position] in
+        asteroids = Set(inputLines.enumerated().flatMap { (tuple) -> [Asteroid] in
             let (offset, inputLine) = tuple
-            return inputLine.enumerated().compactMap { (innerTuple) -> Position? in
+            return inputLine.enumerated().compactMap { (innerTuple) -> Asteroid? in
                 let (innerOffset, element) = innerTuple
                 if element == "#" {
-                    return Position(x: innerOffset, y: offset)
+                    return Asteroid(x: innerOffset, y: offset)
                 }
                 return nil
             }
@@ -151,13 +151,13 @@ struct Puzzle10: Puzzle {
         return (x / d, y / d)
     }
 
-    private func isVisible(_ that: Position, from this: Position) -> Bool {
+    private func isVisible(_ that: Asteroid, from this: Asteroid, map: Set<Asteroid>) -> Bool {
         let delta = (that.x - this.x, that.y - this.y)
         let reducedDelta = reduced(delta.0, delta.1)
 
         var current = reducedDelta
         while abs(current.0) <= abs(delta.0), abs(current.1) <= abs(delta.1) {
-            if positions.contains(Position(x: this.x + current.0, y: this.y + current.1)) {
+            if map.contains(Asteroid(x: this.x + current.0, y: this.y + current.1)) {
                 break
             }
             current = (current.0 + reducedDelta.0, current.1 + reducedDelta.1)
@@ -165,24 +165,60 @@ struct Puzzle10: Puzzle {
         return current == delta
     }
 
-    func part1() -> String {
+    private func findAsteroidWithMaxVisibleAsteroids() -> (Asteroid, Int) {
         var max = 0
-        positions.forEach { (this) in
+        var asteroid: Asteroid?
+        asteroids.forEach { (this) in
             var currentMax = 0
-            positions.forEach { (that) in
-                if this != that, isVisible(that, from: this) {
+            asteroids.forEach { (that) in
+                if this != that, isVisible(that, from: this, map: asteroids) {
                     currentMax = currentMax + 1
                 }
             }
             if currentMax > max {
                 max = currentMax
+                asteroid = this
             }
         }
-        return "\(max)"
+        return (asteroid!, max)
+    }
+
+    private func angleBetween(_ this: Asteroid, _ that: Asteroid) -> Double {
+        let angleRad = atan2(Double((41 - that.y) - (41 - this.y)), Double(that.x - this.x))
+        let angleDeg = 90.0 - (angleRad * (180.0 / Double.pi))
+        return angleDeg > 0.0 ? angleDeg : angleDeg + 360.0
+    }
+
+    func part1() -> String {
+        let answer = findAsteroidWithMaxVisibleAsteroids()
+        return "\(answer.1)"
     }
 
     func part2() -> String {
-        print(reduced(-24, 8))
-        return ""
+        let laser = findAsteroidWithMaxVisibleAsteroids().0
+        var remaining = asteroids
+        remaining.remove(laser)
+        var destroyed: [Asteroid] = []
+
+        while !remaining.isEmpty {
+            let visible = remaining.filter { (asteroid) -> Bool in
+                isVisible(asteroid, from: laser, map: remaining)
+            }
+            destroyed.append(contentsOf: visible.sorted(by: { (lhs, rhs) -> Bool in
+                let fstAngle = angleBetween(laser, lhs)
+                let sndAngle = angleBetween(laser, rhs)
+                if fstAngle == 0.0 || fstAngle >= 360.0 {
+                    return true
+                }
+                if fstAngle == 0.0 || fstAngle >= 360.0 {
+                    return false
+                }
+                return fstAngle < sndAngle
+            }))
+            remaining = remaining.subtracting(visible)
+        }
+        let wantedAsteroid = destroyed[199]
+        let answer = wantedAsteroid.x * 100 + wantedAsteroid.y
+        return "\(answer)"
     }
 }
