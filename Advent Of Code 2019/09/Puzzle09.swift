@@ -62,19 +62,19 @@ import Foundation
 
 struct Puzzle09: Puzzle {
     let input: [Int]
-    private let computer: IntcodeComputer
 
     init() {
         input = InputFileReader.readInput(id: "09", separator: ",").map { Int($0.trimmingCharacters(in: .whitespacesAndNewlines))! }
-        computer = IntcodeComputer(intcode: input)
     }
 
     func part1() -> String {
+        let computer = IntcodeComputer(intcode: input)
         computer.compute(printOutputs: true, inputs: 1)
         return ""
     }
 
     func part2() -> String {
+        let computer = IntcodeComputer(intcode: input)
         computer.compute(printOutputs: true, inputs: 2)
         return ""
     }

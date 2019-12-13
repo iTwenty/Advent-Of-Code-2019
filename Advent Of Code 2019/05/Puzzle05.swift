@@ -112,13 +112,17 @@ struct Puzzle05: Puzzle {
 
     func part1() -> String {
         let computer = IntcodeComputer(intcode: input)
-        computer.compute(printOutputs: true ,inputs: 1)
+        while case let .output(o) = computer.compute(inputs: 1) {
+            print(o)
+        }
         return ""
     }
 
     func part2() -> String {
         let computer = IntcodeComputer(intcode: input)
-        computer.compute(printOutputs: true ,inputs: 5)
+        while case let .output(o) = computer.compute(inputs: 5) {
+            print(o)
+        }
         return ""
     }
 }

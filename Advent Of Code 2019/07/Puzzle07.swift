@@ -123,45 +123,54 @@ struct Puzzle07: Puzzle {
             Array(permutation).map { $0.wholeNumberValue! }
         }
 
-        let computer = IntcodeComputer(intcode: input)
-
-        let outputs = possiblePhases.map { (possiblePhase) -> Int in
-            let ampAPhase = possiblePhase[0]
-            let ampBPhase = possiblePhase[1]
-            let ampCPhase = possiblePhase[2]
-            let ampDPhase = possiblePhase[3]
-            let ampEPhase = possiblePhase[4]
-            let ampAOutput = computer.compute(inputs: ampAPhase, 0)
-            computer.reset()
-            let ampBOutput = computer.compute(inputs: ampBPhase, ampAOutput.last!)
-            computer.reset()
-            let ampCOutput = computer.compute(inputs: ampCPhase, ampBOutput.last!)
-            computer.reset()
-            let ampDOutput = computer.compute(inputs: ampDPhase, ampCOutput.last!)
-            computer.reset()
-            let ampEOutput = computer.compute(inputs: ampEPhase, ampDOutput.last!)
-            computer.reset()
-            return ampEOutput.last!
+        let outputs = possiblePhases.map { (phase) -> Int in
+            let computers = (0...4).map { (_) -> IntcodeComputer in
+                IntcodeComputer(intcode: input)
+            }
+            guard case let .output(a) = computers[0].compute(inputs: phase[0], 0) else { fatalError() }
+            guard case let .output(b) = computers[1].compute(inputs: phase[1], a) else { fatalError() }
+            guard case let .output(c) = computers[2].compute(inputs: phase[2], b) else { fatalError() }
+            guard case let .output(d) = computers[3].compute(inputs: phase[3], c) else { fatalError() }
+            guard case let .output(e) = computers[4].compute(inputs: phase[4], d) else { fatalError() }
+            return e
         }
         return "\(outputs.max()!)"
     }
 
-    // Can't figure this one out...
     func part2() -> String {
-//        let possiblePhases = (56789...98765).filter { (number) -> Bool in
-//            let digits = number.digits
-//            return digits.allSatisfy { (5...9).contains($0) } && Set(digits).count == digits.count
-//        }
+        let possiblePhases = "56789".permutations().map { (permutation) -> [Int] in
+            Array(permutation).map { $0.wholeNumberValue! }
+        }
 
-//        possiblePhases.map { (possiblePhase) -> Int in
-//            let ampAPhase = (possiblePhase / 10000) % 10
-//            let ampBPhase = (possiblePhase / 1000) % 10
-//            let ampCPhase = (possiblePhase / 100) % 10
-//            let ampDPhase = (possiblePhase / 10) % 10
-//            let ampEPhase = (possiblePhase / 1) % 10
-//            var inputt = input
-//
-//        }
-        return ""
+        let outputs = possiblePhases.map { (phase) -> Int in
+            let computers = (0...4).map { (_) -> IntcodeComputer in
+                IntcodeComputer(intcode: input)
+            }
+            var lastAmpExitReason: ExitReason = .output(0)
+            var shouldAcceptPhaseInput: Bool = true
+            var lastAmpOutput = 0
+            while case let .output(e) = lastAmpExitReason {
+                lastAmpOutput = e
+                let aReason = computers[0].compute(inputs: getInputs(phase[0], lastAmpExitReason, shouldAcceptPhaseInput: shouldAcceptPhaseInput))
+                let bReason = computers[1].compute(inputs: getInputs(phase[1], aReason, shouldAcceptPhaseInput: shouldAcceptPhaseInput))
+                let cReason = computers[2].compute(inputs: getInputs(phase[2], bReason, shouldAcceptPhaseInput: shouldAcceptPhaseInput))
+                let dReason = computers[3].compute(inputs: getInputs(phase[3], cReason, shouldAcceptPhaseInput: shouldAcceptPhaseInput))
+                lastAmpExitReason = computers[4].compute(inputs: getInputs(phase[4], dReason, shouldAcceptPhaseInput: shouldAcceptPhaseInput))
+                shouldAcceptPhaseInput = false
+            }
+            return lastAmpOutput
+        }
+        return "\(outputs.max()!)"
+    }
+
+    private func getInputs(_ phaseInput: Int, _ previousAmpExitReason: ExitReason, shouldAcceptPhaseInput: Bool) -> [Int] {
+        if shouldAcceptPhaseInput, case let .output(previousOutput) = previousAmpExitReason {
+            return [phaseInput, previousOutput]
+        } else if case let .output(previousOutput) = previousAmpExitReason {
+            return [previousOutput]
+        } else if shouldAcceptPhaseInput {
+            return [phaseInput]
+        }
+        return []
     }
 }

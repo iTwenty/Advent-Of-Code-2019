@@ -14,6 +14,11 @@ fileprivate enum ParameterMode: Int {
     case relative
 }
 
+enum ExitReason {
+    case output(Int)
+    case halt
+}
+
 class IntcodeComputer {
     // Original program
     private let intcode: [Int]
@@ -31,7 +36,6 @@ class IntcodeComputer {
 
     // Reset the internal state
     func reset() {
-        inputCounter = 0
         relativeBase = 0
         pc = 0
         memory = [:]
@@ -42,9 +46,17 @@ class IntcodeComputer {
     }
 
     @discardableResult
-    func compute(printOutputs: Bool = false, inputs: Int...) -> [Int] {
-        var outputs: [Int] = []
-        while pc < intcode.count {
+    func compute(printOutputs: Bool = false, inputs: Int...) -> ExitReason {
+        return compute(printOutputs: printOutputs, inputs: inputs)
+    }
+
+    @discardableResult
+    func compute(printOutputs: Bool = false, inputs: [Int]) -> ExitReason {
+        inputCounter = 0
+        while true {
+            if pc >= intcode.count {
+                fatalError("Program counter outside program!!!")
+            }
             let instruction = memory[pc, default: 0]
             let opcode = instruction % 100
             switch opcode {
@@ -76,8 +88,8 @@ class IntcodeComputer {
                 if printOutputs {
                     print(fstValue)
                 }
-                outputs.append(fstValue)
                 pc = pc + 2
+                return .output(fstValue)
             case 5, 6:
                 let fstParam = memory[pc + 1, default: 0]
                 let sndParam = memory[pc + 2, default: 0]
@@ -94,12 +106,11 @@ class IntcodeComputer {
                 relativeBase += fstValue
                 pc = pc + 2
             case 99:
-                pc = intcode.count
+                return .halt
             default:
-                fatalError("HALT")
+                fatalError("Invalid opcode - \(opcode)")
             }
         }
-        return outputs
     }
 
     func value(atMemoryAddress address: Int) -> Int {
@@ -129,13 +140,13 @@ class IntcodeComputer {
     }
 
     private func readInput(_ inputs: [Int]) -> Int {
-        if inputs.isEmpty {
-            print("Input opcode 03 found. Enter an input :")
-            return Int(readLine()!)!
-        } else {
+        if inputs.indices.contains(self.inputCounter) {
             let inputToReturn = inputs[inputCounter]
             inputCounter = inputCounter + 1
             return inputToReturn
+        }  else {
+            print("Input opcode 03 found. Enter an input :")
+            return Int(readLine()!)!
         }
     }
 }

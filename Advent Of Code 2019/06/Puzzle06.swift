@@ -118,7 +118,7 @@
 
 import Foundation
 
-class Node {
+fileprivate class Node {
     init(id: String, parent: Node? = nil, children: [Node] = []) {
         self.id = id
         self.parent = parent
@@ -130,7 +130,7 @@ class Node {
     var children: [Node]
 }
 
-class TreeCreator {
+fileprivate class TreeCreator {
     private struct Relation: Equatable, Hashable {
         let parent: String
         let child: String
@@ -170,7 +170,7 @@ class TreeCreator {
 }
 
 struct Puzzle06: Puzzle {
-    let tree: Node = TreeCreator.createTrees()[0]
+    private let tree: Node = TreeCreator.createTrees()[0]
 
     private func depth(ofNode node: Node) -> Int {
         var depth = 0
