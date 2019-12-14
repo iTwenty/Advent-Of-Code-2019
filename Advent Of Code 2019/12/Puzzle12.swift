@@ -191,7 +191,59 @@
 
  What is the total energy in the system after simulating the moons given in your scan for 1000 steps?
 
+ --- Part Two ---
+
+ All this drifting around in space makes you wonder about the nature of the universe. Does history really repeat itself? You're curious whether the moons will ever return to a previous state.
+
+ Determine the number of steps that must occur before all of the moons' positions and velocities exactly match a previous point in time.
+
+ For example, the first example above takes 2772 steps before they exactly match a previous point in time; it eventually returns to the initial state:
+
+ After 0 steps:
+ pos=<x= -1, y=  0, z=  2>, vel=<x=  0, y=  0, z=  0>
+ pos=<x=  2, y=-10, z= -7>, vel=<x=  0, y=  0, z=  0>
+ pos=<x=  4, y= -8, z=  8>, vel=<x=  0, y=  0, z=  0>
+ pos=<x=  3, y=  5, z= -1>, vel=<x=  0, y=  0, z=  0>
+
+ After 2770 steps:
+ pos=<x=  2, y= -1, z=  1>, vel=<x= -3, y=  2, z=  2>
+ pos=<x=  3, y= -7, z= -4>, vel=<x=  2, y= -5, z= -6>
+ pos=<x=  1, y= -7, z=  5>, vel=<x=  0, y= -3, z=  6>
+ pos=<x=  2, y=  2, z=  0>, vel=<x=  1, y=  6, z= -2>
+
+ After 2771 steps:
+ pos=<x= -1, y=  0, z=  2>, vel=<x= -3, y=  1, z=  1>
+ pos=<x=  2, y=-10, z= -7>, vel=<x= -1, y= -3, z= -3>
+ pos=<x=  4, y= -8, z=  8>, vel=<x=  3, y= -1, z=  3>
+ pos=<x=  3, y=  5, z= -1>, vel=<x=  1, y=  3, z= -1>
+
+ After 2772 steps:
+ pos=<x= -1, y=  0, z=  2>, vel=<x=  0, y=  0, z=  0>
+ pos=<x=  2, y=-10, z= -7>, vel=<x=  0, y=  0, z=  0>
+ pos=<x=  4, y= -8, z=  8>, vel=<x=  0, y=  0, z=  0>
+ pos=<x=  3, y=  5, z= -1>, vel=<x=  0, y=  0, z=  0>
+
+ Of course, the universe might last for a very long time before repeating. Here's a copy of the second example from above:
+
+ <x=-8, y=-10, z=0>
+ <x=5, y=5, z=10>
+ <x=2, y=-7, z=3>
+ <x=9, y=-8, z=-3>
+
+ This set of initial positions takes 4686774924 steps before it repeats a previous state! Clearly, you might need to find a more efficient way to simulate the universe.
+
+ How many steps does it take to reach the first state that exactly matches a previous state?
+
  */
+
+fileprivate struct Axis: OptionSet {
+    let rawValue: Int
+
+    static let x = Axis(rawValue: 1<<0)
+    static let y = Axis(rawValue: 1<<1)
+    static let z = Axis(rawValue: 1<<2)
+    static let all: Axis = [.x, .y, .z]
+}
 
 fileprivate struct Position: Equatable, Hashable {
     var x, y, z: Int
@@ -211,10 +263,10 @@ fileprivate struct Moon: Equatable, Hashable, CustomStringConvertible {
         self.velocity = velocity
     }
 
-    mutating func applyVelocity() {
-        position.x = position.x + velocity.x
-        position.y = position.y + velocity.y
-        position.z = position.z + velocity.z
+    mutating func applyVelocity(axes: Axis) {
+        if axes.contains(.x) { position.x = position.x + velocity.x }
+        if axes.contains(.y) { position.y = position.y + velocity.y }
+        if axes.contains(.z) { position.z = position.z + velocity.z }
     }
 
     func energy() -> Int {
@@ -247,20 +299,26 @@ struct Puzzle12: Puzzle {
         return Moon(position: Position(x: xPos, y: yPos, z: zPos))
     }
 
-    private func applyGravity(_ moon: inout Moon, all: [Moon]) {
+    private func applyGravity(_ moon: inout Moon, all: [Moon], axes: Axis) {
         all.forEach { (one) in
-            if moon.position.x < one.position.x { moon.velocity.x = moon.velocity.x + 1 }
-            if moon.position.y < one.position.y { moon.velocity.y = moon.velocity.y + 1 }
-            if moon.position.z < one.position.z { moon.velocity.z = moon.velocity.z + 1 }
-            if moon.position.x > one.position.x { moon.velocity.x = moon.velocity.x - 1 }
-            if moon.position.y > one.position.y { moon.velocity.y = moon.velocity.y - 1 }
-            if moon.position.z > one.position.z { moon.velocity.z = moon.velocity.z - 1 }
+            if axes.contains(.x) {
+                if moon.position.x < one.position.x { moon.velocity.x = moon.velocity.x + 1 }
+                if moon.position.x > one.position.x { moon.velocity.x = moon.velocity.x - 1 }
+            }
+            if axes.contains(.y) {
+                if moon.position.y < one.position.y { moon.velocity.y = moon.velocity.y + 1 }
+                if moon.position.y > one.position.y { moon.velocity.y = moon.velocity.y - 1 }
+            }
+            if axes.contains(.z) {
+                if moon.position.z < one.position.z { moon.velocity.z = moon.velocity.z + 1 }
+                if moon.position.z > one.position.z { moon.velocity.z = moon.velocity.z - 1 }
+            }
         }
     }
 
-    private func advance(_ moon: inout Moon, all: [Moon]) {
-        applyGravity(&moon, all: all)
-        moon.applyVelocity()
+    private func advance(_ moon: inout Moon, all: [Moon], axes: Axis) {
+        applyGravity(&moon, all: all, axes: axes)
+        moon.applyVelocity(axes: axes)
     }
 
     func part1() -> String {
@@ -269,7 +327,7 @@ struct Puzzle12: Puzzle {
             let state = current
             for i in current.indices {
                 var currentMoon = current[i]
-                advance(&currentMoon, all: state)
+                advance(&currentMoon, all: state, axes: .all)
                 current[i] = currentMoon
             }
         }
@@ -279,7 +337,40 @@ struct Puzzle12: Puzzle {
         return "\(totalEnergy)"
     }
 
+    private func stepsBeforeRepeat(axis: Axis) -> Int {
+        var current: [Moon] = input
+        var steps = 0
+        while true {
+            let state = current
+            for i in current.indices {
+                var currentMoon = current[i]
+                advance(&currentMoon, all: state, axes: axis)
+                current[i] = currentMoon
+            }
+            steps = steps + 1
+            if current == input {
+                break
+            }
+        }
+        return steps
+    }
+
+    private func gcd(_ x: Int, _ y: Int) -> Int {
+        if y == 0 {
+            return x
+        } else {
+            return gcd(y, x % y)
+        }
+    }
+
+    private func lcm(_ x: Int, _ y: Int) -> Int {
+        return x * y / gcd(x, y)
+    }
+
     func part2() -> String {
-        return ""
+        let xSteps = stepsBeforeRepeat(axis: .x)
+        let ySteps = stepsBeforeRepeat(axis: .y)
+        let zSteps = stepsBeforeRepeat(axis: .z)
+        return "\(lcm(xSteps, lcm(ySteps, zSteps)))"
     }
 }
