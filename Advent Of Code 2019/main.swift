@@ -8,6 +8,6 @@
 
 import Foundation
 
-let puzzle = Puzzle09()
+let puzzle = Puzzle11()
 print(puzzle.part1())
 print(puzzle.part2())
