@@ -22,6 +22,9 @@
 		6337576F239E168700BD65DE /* Puzzle09.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337576E239E168700BD65DE /* Puzzle09.swift */; };
 		63481D0A23A4ECC40016DD0E /* Input12 in Resources */ = {isa = PBXBuildFile; fileRef = 63481D0923A4ECC40016DD0E /* Input12 */; };
 		63481D0E23A4ED090016DD0E /* Puzzle12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63481D0B23A4ECE30016DD0E /* Puzzle12.swift */; };
+		63481D1023A509A70016DD0E /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63481D0F23A509A70016DD0E /* Canvas.swift */; };
+		63481D1323A50EB70016DD0E /* Input13 in Resources */ = {isa = PBXBuildFile; fileRef = 63481D1223A50EB70016DD0E /* Input13 */; };
+		63481D1523A50ECB0016DD0E /* Puzzle13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63481D1423A50ECB0016DD0E /* Puzzle13.swift */; };
 		63687DBB2399470000B75226 /* Puzzle05.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63687DBA2399470000B75226 /* Puzzle05.swift */; };
 		63687DBC2399470800B75226 /* Input05 in Resources */ = {isa = PBXBuildFile; fileRef = 63687DB9239946CD00B75226 /* Input05 */; };
 		63914A01239F68E800BBA601 /* Input10 in Resources */ = {isa = PBXBuildFile; fileRef = 63914A00239F68E800BBA601 /* Input10 */; };
@@ -69,6 +72,9 @@
 		6337576E239E168700BD65DE /* Puzzle09.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle09.swift; sourceTree = "<group>"; };
 		63481D0923A4ECC40016DD0E /* Input12 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input12; sourceTree = "<group>"; };
 		63481D0B23A4ECE30016DD0E /* Puzzle12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle12.swift; sourceTree = "<group>"; };
+		63481D0F23A509A70016DD0E /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		63481D1223A50EB70016DD0E /* Input13 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input13; sourceTree = "<group>"; };
+		63481D1423A50ECB0016DD0E /* Puzzle13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle13.swift; sourceTree = "<group>"; };
 		63687DB9239946CD00B75226 /* Input05 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input05; sourceTree = "<group>"; };
 		63687DBA2399470000B75226 /* Puzzle05.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle05.swift; sourceTree = "<group>"; };
 		63914A00239F68E800BBA601 /* Input10 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input10; sourceTree = "<group>"; };
@@ -170,6 +176,15 @@
 			path = 12;
 			sourceTree = "<group>";
 		};
+		63481D1123A50E9F0016DD0E /* 13 */ = {
+			isa = PBXGroup;
+			children = (
+				63481D1223A50EB70016DD0E /* Input13 */,
+				63481D1423A50ECB0016DD0E /* Puzzle13.swift */,
+			);
+			path = 13;
+			sourceTree = "<group>";
+		};
 		63687DB8239946A400B75226 /* 05 */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +256,7 @@
 				639149FF239F68C900BBA601 /* 10 */,
 				63914A2D23A0AF4700BBA601 /* 11 */,
 				63481D0823A4ECAE0016DD0E /* 12 */,
+				63481D1123A50E9F0016DD0E /* 13 */,
 				63E86CFC2393ED2900CAA600 /* main.swift */,
 			);
 			path = "Advent Of Code 2019";
@@ -262,6 +278,7 @@
 				63E86D0F2393F57800CAA600 /* InputFileReader.swift */,
 				630943D8239BA898000FA58A /* IntcodeComputer.swift */,
 				63914A3323A10F4C00BBA601 /* BlockingQueue.swift */,
+				63481D0F23A509A70016DD0E /* Canvas.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -368,6 +385,7 @@
 				630943D3239AA3BA000FA58A /* Input06 in Resources */,
 				63E86D1B2393F72900CAA600 /* Input01 in Resources */,
 				63481D0A23A4ECC40016DD0E /* Input12 in Resources */,
+				63481D1323A50EB70016DD0E /* Input13 in Resources */,
 				6307BFC323952D6B00809579 /* Input02 in Resources */,
 				6337576D239E167100BD65DE /* Input09 in Resources */,
 				63914A2F23A0AF6900BBA601 /* Input11 in Resources */,
@@ -390,6 +408,8 @@
 				63E86CFD2393ED2900CAA600 /* main.swift in Sources */,
 				63914A3123A0AF7E00BBA601 /* Puzzle11.swift in Sources */,
 				630943D5239AA3CC000FA58A /* Puzzle06.swift in Sources */,
+				63481D1523A50ECB0016DD0E /* Puzzle13.swift in Sources */,
+				63481D1023A509A70016DD0E /* Canvas.swift in Sources */,
 				63914A3423A10F4D00BBA601 /* BlockingQueue.swift in Sources */,
 				63687DBB2399470000B75226 /* Puzzle05.swift in Sources */,
 				630943DE239BAD0C000FA58A /* Puzzle07.swift in Sources */,

@@ -130,29 +130,6 @@ fileprivate enum Color: Int {
     }
 }
 
-fileprivate struct Canvas {
-    private var canvas: [[Character]]
-    private let origin: (x: Int, y: Int)
-
-    init(maxX: Int, maxY: Int, minX: Int, minY: Int, start: Character = "0") {
-        self.canvas = (minY...maxY).map { (y) -> [Character] in
-            return (minX...maxX).map { (_) -> Character in start }
-        }
-
-        origin = (abs(minX), abs(minY))
-    }
-
-    mutating func draw(x: Int, y: Int, character: Character) {
-        let adjX = x + origin.x
-        let adjY = canvas.count - 1 - (y + origin.y)
-        canvas[adjY][adjX] = character
-    }
-
-    func render() {
-        canvas.forEach { print(String($0)) }
-    }
-}
-
 struct Puzzle11: Puzzle {
     let input: [Int]
 
