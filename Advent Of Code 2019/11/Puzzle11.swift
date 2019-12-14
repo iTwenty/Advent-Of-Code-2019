@@ -72,6 +72,14 @@ x
 
  Build a new emergency hull painting robot and run the Intcode program on it. How many panels does it paint at least once?
 
+ --- Part Two ---
+
+ You're not sure what it's trying to paint, but it's definitely not a registration identifier. The Space Police are getting impatient.
+
+ Checking your external ship cameras again, you notice a white panel marked "emergency hull painting robot starting panel". The rest of the panels are still black, but it looks like the robot was expecting to start on a white panel, not a black one.
+
+ Based on the Space Law Space Brochure that the Space Police attached to one of your windows, a valid registration identifier is always eight capital letters. After starting the robot on a single white panel instead, what registration identifier does it paint on your hull?
+
  */
 
 import Foundation
@@ -113,6 +121,36 @@ fileprivate enum Rotation: Int {
 fileprivate enum Color: Int {
     case black
     case white
+
+    var renderer: Character {
+        switch self {
+        case .black: return "_"
+        case .white: return "*"
+        }
+    }
+}
+
+fileprivate struct Canvas {
+    private var canvas: [[Character]]
+    private let origin: (x: Int, y: Int)
+
+    init(maxX: Int, maxY: Int, minX: Int, minY: Int, start: Character = "0") {
+        self.canvas = (minY...maxY).map { (y) -> [Character] in
+            return (minX...maxX).map { (_) -> Character in start }
+        }
+
+        origin = (abs(minX), abs(minY))
+    }
+
+    mutating func draw(x: Int, y: Int, character: Character) {
+        let adjX = x + origin.x
+        let adjY = canvas.count - 1 - (y + origin.y)
+        canvas[adjY][adjX] = character
+    }
+
+    func render() {
+        canvas.forEach { print(String($0)) }
+    }
 }
 
 struct Puzzle11: Puzzle {
@@ -122,12 +160,12 @@ struct Puzzle11: Puzzle {
         input = InputFileReader.readInput(id: "11", separator: ",").map { Int($0.trimmingCharacters(in: .whitespacesAndNewlines))! }
     }
 
-    func part1() -> String {
+    private func paintedPositions(startColor: Color) -> [Position: Color] {
         let robot = IntcodeComputer(intcode: input)
         var currentPosition = Position(x: 0, y: 0)
         var currentDirection = Direction.up
         var painted: [Position: Color] = [:]
-        var inputColor = painted[currentPosition, default: .black]
+        var inputColor = painted[currentPosition, default: startColor]
 
         while case let .output(outputColorRaw) = robot.compute(inputs: inputColor.rawValue) {
             let outputColor = Color(rawValue: outputColorRaw)!
@@ -140,10 +178,32 @@ struct Puzzle11: Puzzle {
             currentPosition = currentPosition.move(currentDirection)
             inputColor = painted[currentPosition, default: .black]
         }
-        return "\(painted.count)"
+        return painted
+    }
+
+    func part1() -> String {
+        return "\(paintedPositions(startColor: .black).count)"
     }
 
     func part2() -> String {
+        let painted = paintedPositions(startColor: .white)
+
+        let extremes = painted.keys.reduce((0, 0, 0, 0)) { (currentExtremes, current) -> (Int, Int, Int, Int) in
+            var maxX = currentExtremes.0, maxY = currentExtremes.1,
+            minX = currentExtremes.2, minY = currentExtremes.3
+            if current.x > maxX { maxX = current.x }
+            if current.y > maxY { maxY = current.y }
+            if current.x < minX { minX = current.x }
+            if current.y < minY { minY = current.y }
+            return (maxX, maxY, minX, minY)
+        }
+
+        var canvas = Canvas(maxX: extremes.0, maxY: extremes.1, minX: extremes.2, minY: extremes.3, start: Color.black.renderer)
+        painted.forEach { (pair) in
+            let (key, value) = pair
+            canvas.draw(x: key.x, y: key.y, character: value.renderer)
+        }
+        canvas.render()
         return ""
     }
 }
