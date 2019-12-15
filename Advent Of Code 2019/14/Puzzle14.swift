@@ -210,7 +210,36 @@ struct Puzzle14: Puzzle {
         return "\(ans)"
     }
 
+    private func search(lower: Int, upper: Int, condition: (Int) -> ComparisonResult) -> Int? {
+        if upper <= lower {
+            return nil
+        }
+        let mid = lower + ((upper - lower) / 2)
+        switch condition(mid) {
+        case .orderedAscending: return search(lower: mid, upper: upper, condition: condition)
+        case .orderedDescending: return search(lower: lower, upper: mid, condition: condition)
+        case .orderedSame: return mid
+        }
+    }
+
     func part2() -> String {
-        return ""
+        let oreAmount = 1000000000000 // 1 trillion
+
+        // Range of lower...upper obtained by manual eyeballing...
+        let ans = search(lower: 1000000, upper: 10000000) { (fuelAmount) -> ComparisonResult in
+            var excessA: [String: Int] = [:]
+            var excessB: [String: Int] = [:]
+            let oreForCurrentAmount = oreNeededToProduce(fuelAmount, of: "FUEL", excess: &excessA)
+            let oreForNextAmount = oreNeededToProduce(fuelAmount + 1, of: "FUEL", excess: &excessB)
+
+            if oreForCurrentAmount == oreAmount || (oreForCurrentAmount < oreAmount && oreForNextAmount > oreAmount) {
+                return .orderedSame
+            }
+            if oreForCurrentAmount < oreAmount && oreForNextAmount < oreAmount {
+                return .orderedAscending
+            }
+            return .orderedDescending
+        }
+        return "\(ans ?? -1)"
     }
 }
