@@ -22,6 +22,7 @@ enum ExitReason {
 class IntcodeComputer {
     // Original program
     private let intcode: [Int]
+    private let inputBlock: (() -> Int?)?
 
     // Internal state
     private var inputCounter = 0
@@ -29,8 +30,9 @@ class IntcodeComputer {
     private var pc = 0
     private var memory: [Int: Int] = [:]
 
-    init(intcode: [Int]) {
+    init(intcode: [Int], inputBlock: (() -> Int?)? = nil) {
         self.intcode = intcode
+        self.inputBlock = inputBlock
         reset()
     }
 
@@ -140,6 +142,9 @@ class IntcodeComputer {
     }
 
     private func readInput(_ inputs: [Int]) -> Int {
+        if let input = inputBlock?() {
+            return input
+        }
         if inputs.indices.contains(self.inputCounter) {
             let inputToReturn = inputs[inputCounter]
             inputCounter = inputCounter + 1
