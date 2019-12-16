@@ -164,22 +164,10 @@ struct Puzzle11: Puzzle {
 
     func part2() -> String {
         let painted = paintedPositions(startColor: .white)
-
-        let extremes = painted.keys.reduce((0, 0, 0, 0)) { (currentExtremes, current) -> (Int, Int, Int, Int) in
-            var maxX = currentExtremes.0, maxY = currentExtremes.1,
-            minX = currentExtremes.2, minY = currentExtremes.3
-            if current.x > maxX { maxX = current.x }
-            if current.y > maxY { maxY = current.y }
-            if current.x < minX { minX = current.x }
-            if current.y < minY { minY = current.y }
-            return (maxX, maxY, minX, minY)
-        }
-
-        var canvas = Canvas(maxX: extremes.0, maxY: extremes.1, minX: extremes.2, minY: extremes.3, start: Color.black.renderer)
-        painted.forEach { (pair) in
-            let (key, value) = pair
-            canvas.draw(x: key.x, y: key.y, character: value.renderer)
-        }
+        let canvas = Canvas(pixels: painted.map({ (entry) -> Pixel in
+            let (key, value) = entry
+            return (x: key.x, y: key.y, char: value.renderer)
+        }), anchor: .center, emptyChar: Color.black.renderer)
         canvas.render()
         return ""
     }
