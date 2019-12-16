@@ -61,6 +61,11 @@ struct Canvas {
     }
 
     func render() {
-        canvas.forEach { print(String($0)) }
+        canvas.forEach { (row) in
+            let r = row.reduce("") { (string, c) -> String in
+                "\(string)\(c) "
+            }
+            print(r)
+        }
     }
 }
