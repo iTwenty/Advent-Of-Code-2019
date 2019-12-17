@@ -16,6 +16,9 @@
 		630943D9239BA898000FA58A /* IntcodeComputer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630943D8239BA898000FA58A /* IntcodeComputer.swift */; };
 		630943DC239BACF3000FA58A /* Input07 in Resources */ = {isa = PBXBuildFile; fileRef = 630943DB239BACF3000FA58A /* Input07 */; };
 		630943DE239BAD0C000FA58A /* Puzzle07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630943DD239BAD0C000FA58A /* Puzzle07.swift */; };
+		63237D5323A7C16800109E9A /* Puzzle16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63237D5223A7C16700109E9A /* Puzzle16.swift */; };
+		63237D5423A7C1E100109E9A /* Input16 in Resources */ = {isa = PBXBuildFile; fileRef = 63237D5123A7C16700109E9A /* Input16 */; };
+		63237D5623A7D0E900109E9A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63237D5523A7D0E900109E9A /* Extensions.swift */; };
 		63375768239D578800BD65DE /* Input08 in Resources */ = {isa = PBXBuildFile; fileRef = 63375767239D578800BD65DE /* Input08 */; };
 		6337576A239D57AF00BD65DE /* Puzzle08.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63375769239D57AF00BD65DE /* Puzzle08.swift */; };
 		6337576D239E167100BD65DE /* Input09 in Resources */ = {isa = PBXBuildFile; fileRef = 6337576C239E167100BD65DE /* Input09 */; };
@@ -70,6 +73,9 @@
 		630943D8239BA898000FA58A /* IntcodeComputer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntcodeComputer.swift; sourceTree = "<group>"; };
 		630943DB239BACF3000FA58A /* Input07 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input07; sourceTree = "<group>"; };
 		630943DD239BAD0C000FA58A /* Puzzle07.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle07.swift; sourceTree = "<group>"; };
+		63237D5123A7C16700109E9A /* Input16 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input16; sourceTree = "<group>"; };
+		63237D5223A7C16700109E9A /* Puzzle16.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Puzzle16.swift; sourceTree = "<group>"; };
+		63237D5523A7D0E900109E9A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		63375767239D578800BD65DE /* Input08 */ = {isa = PBXFileReference; lastKnownFileType = text; path = Input08; sourceTree = "<group>"; };
 		63375769239D57AF00BD65DE /* Puzzle08.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle08.swift; sourceTree = "<group>"; };
 		6337576C239E167100BD65DE /* Input09 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input09; sourceTree = "<group>"; };
@@ -155,6 +161,15 @@
 				630943DD239BAD0C000FA58A /* Puzzle07.swift */,
 			);
 			path = 07;
+			sourceTree = "<group>";
+		};
+		63237D5023A7C16700109E9A /* 16 */ = {
+			isa = PBXGroup;
+			children = (
+				63237D5123A7C16700109E9A /* Input16 */,
+				63237D5223A7C16700109E9A /* Puzzle16.swift */,
+			);
+			path = 16;
 			sourceTree = "<group>";
 		};
 		63375766239D576E00BD65DE /* 08 */ = {
@@ -285,6 +300,7 @@
 				63481D1123A50E9F0016DD0E /* 13 */,
 				63481D1723A5D06C0016DD0E /* 14 */,
 				63481D1C23A62B370016DD0E /* 15 */,
+				63237D5023A7C16700109E9A /* 16 */,
 				63E86CFC2393ED2900CAA600 /* main.swift */,
 			);
 			path = "Advent Of Code 2019";
@@ -307,6 +323,7 @@
 				630943D8239BA898000FA58A /* IntcodeComputer.swift */,
 				63914A3323A10F4C00BBA601 /* BlockingQueue.swift */,
 				63481D0F23A509A70016DD0E /* Canvas.swift */,
+				63237D5523A7D0E900109E9A /* Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -420,6 +437,7 @@
 				63914A2F23A0AF6900BBA601 /* Input11 in Resources */,
 				630943DC239BACF3000FA58A /* Input07 in Resources */,
 				63481D1B23A5D0840016DD0E /* Input14 in Resources */,
+				63237D5423A7C1E100109E9A /* Input16 in Resources */,
 				63375768239D578800BD65DE /* Input08 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,6 +457,7 @@
 				63914A3123A0AF7E00BBA601 /* Puzzle11.swift in Sources */,
 				630943D5239AA3CC000FA58A /* Puzzle06.swift in Sources */,
 				63481D1523A50ECB0016DD0E /* Puzzle13.swift in Sources */,
+				63237D5323A7C16800109E9A /* Puzzle16.swift in Sources */,
 				63481D1023A509A70016DD0E /* Canvas.swift in Sources */,
 				63914A3423A10F4D00BBA601 /* BlockingQueue.swift in Sources */,
 				63687DBB2399470000B75226 /* Puzzle05.swift in Sources */,
@@ -449,6 +468,7 @@
 				63E86D092393EEBF00CAA600 /* Puzzle01.swift in Sources */,
 				6307BFC123952CA000809579 /* Puzzle02.swift in Sources */,
 				63481D0E23A4ED090016DD0E /* Puzzle12.swift in Sources */,
+				63237D5623A7D0E900109E9A /* Extensions.swift in Sources */,
 				63481D1A23A5D06C0016DD0E /* Puzzle14.swift in Sources */,
 				63E86D102393F57800CAA600 /* InputFileReader.swift in Sources */,
 				6337576F239E168700BD65DE /* Puzzle09.swift in Sources */,

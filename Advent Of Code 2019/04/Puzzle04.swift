@@ -42,12 +42,6 @@
 
 import Foundation
 
-fileprivate extension BinaryInteger {
-    var digits: [Int] {
-        return String(describing: self).compactMap { Int(String($0)) }
-    }
-}
-
 fileprivate extension Array where Element: Hashable {
     func counted() -> [Element: Int] {
         let ones = repeatElement(1, count: self.count)
