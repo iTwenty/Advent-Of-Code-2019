@@ -38,6 +38,7 @@ class IntcodeComputer {
 
     // Reset the internal state
     func reset() {
+        inputCounter = 0
         relativeBase = 0
         pc = 0
         memory = [:]
@@ -54,7 +55,6 @@ class IntcodeComputer {
 
     @discardableResult
     func compute(printOutputs: Bool = false, inputs: [Int]) -> ExitReason {
-        inputCounter = 0
         while true {
             if pc >= intcode.count {
                 fatalError("Program counter outside program!!!")
