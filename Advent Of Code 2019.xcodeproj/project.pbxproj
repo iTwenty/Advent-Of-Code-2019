@@ -45,6 +45,8 @@
 		63A6A4F823982C9600DC8DDA /* Input04 in Resources */ = {isa = PBXBuildFile; fileRef = 63A6A4F723982C9600DC8DDA /* Input04 */; };
 		63C3E8A823AB662C0017AF88 /* Input19 in Resources */ = {isa = PBXBuildFile; fileRef = 63C3E8A723AB662C0017AF88 /* Input19 */; };
 		63C3E8AA23AB663C0017AF88 /* Puzzle19.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C3E8A923AB663C0017AF88 /* Puzzle19.swift */; };
+		63D4970423ADFDE30070FFA3 /* Input21 in Resources */ = {isa = PBXBuildFile; fileRef = 63D4970323ADFDE30070FFA3 /* Input21 */; };
+		63D4970623ADFDF00070FFA3 /* Puzzle21.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4970523ADFDF00070FFA3 /* Puzzle21.swift */; };
 		63E86CFD2393ED2900CAA600 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86CFC2393ED2900CAA600 /* main.swift */; };
 		63E86D092393EEBF00CAA600 /* Puzzle01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86D082393EEBF00CAA600 /* Puzzle01.swift */; };
 		63E86D0E2393F19000CAA600 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E86D0D2393F19000CAA600 /* Puzzle.swift */; };
@@ -106,6 +108,8 @@
 		63A6A4F723982C9600DC8DDA /* Input04 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input04; sourceTree = "<group>"; };
 		63C3E8A723AB662C0017AF88 /* Input19 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input19; sourceTree = "<group>"; };
 		63C3E8A923AB663C0017AF88 /* Puzzle19.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle19.swift; sourceTree = "<group>"; };
+		63D4970323ADFDE30070FFA3 /* Input21 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input21; sourceTree = "<group>"; };
+		63D4970523ADFDF00070FFA3 /* Puzzle21.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle21.swift; sourceTree = "<group>"; };
 		63E86CF92393ED2900CAA600 /* Advent Of Code 2019 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Advent Of Code 2019"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E86CFC2393ED2900CAA600 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		63E86D052393EE3000CAA600 /* Input01 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Input01; sourceTree = "<group>"; };
@@ -288,6 +292,15 @@
 			path = 19;
 			sourceTree = "<group>";
 		};
+		63D4970223ADFDCB0070FFA3 /* 21 */ = {
+			isa = PBXGroup;
+			children = (
+				63D4970323ADFDE30070FFA3 /* Input21 */,
+				63D4970523ADFDF00070FFA3 /* Puzzle21.swift */,
+			);
+			path = 21;
+			sourceTree = "<group>";
+		};
 		63E86CF02393ED2900CAA600 = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +342,7 @@
 				63237D5023A7C16700109E9A /* 16 */,
 				63237D5723A8AE7D00109E9A /* 17 */,
 				63C3E8A623AB66170017AF88 /* 19 */,
+				63D4970223ADFDCB0070FFA3 /* 21 */,
 				63E86CFC2393ED2900CAA600 /* main.swift */,
 			);
 			path = "Advent Of Code 2019";
@@ -465,6 +479,7 @@
 				63237D5923A8AE9F00109E9A /* Input17 in Resources */,
 				6337576D239E167100BD65DE /* Input09 in Resources */,
 				63914A2F23A0AF6900BBA601 /* Input11 in Resources */,
+				63D4970423ADFDE30070FFA3 /* Input21 in Resources */,
 				630943DC239BACF3000FA58A /* Input07 in Resources */,
 				63481D1B23A5D0840016DD0E /* Input14 in Resources */,
 				63237D5423A7C1E100109E9A /* Input16 in Resources */,
@@ -495,6 +510,7 @@
 				63481D1F23A62B370016DD0E /* Puzzle15.swift in Sources */,
 				630943DE239BAD0C000FA58A /* Puzzle07.swift in Sources */,
 				6337576A239D57AF00BD65DE /* Puzzle08.swift in Sources */,
+				63D4970623ADFDF00070FFA3 /* Puzzle21.swift in Sources */,
 				63E86D0E2393F19000CAA600 /* Puzzle.swift in Sources */,
 				63E86D092393EEBF00CAA600 /* Puzzle01.swift in Sources */,
 				63237D5B23A8AEB100109E9A /* Puzzle17.swift in Sources */,
